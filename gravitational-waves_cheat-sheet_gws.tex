@@ -1,0 +1,698 @@
+\documentclass[10pt, oneside, onecolumn]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=1in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ...
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+% TeX will automatically convert eps --> pdf in pdflatex
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\usepackage{color}
+% \usepackage{booktabs}   % Fancier tables
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{totcount}
+\usepackage{cuted}
+
+\usepackage[dvipsnames, table]{xcolor} % adds colors to color space (https://en.wikibooks.org/wiki/LaTeX/Colors)
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[section]{placeins}   % Force figures to stay in their sections (tex.stackexchange.com/q/279/22806)
+\usepackage{subfig}
+\usepackage{widetext}
+\usepackage{upgreek}    % allow alternative greek letters like $\uptau$
+\usepackage{enumitem}   % customize enumerate symbols
+\setlist[enumerate]{leftmargin=*}   % Set left-margin of enumerate lists to match the edge
+\setlist[itemize]{leftmargin=*}   % Set left-margin of enumerate lists to match the edge
+
+
+\usepackage{lipsum} % generate dummy text
+\usepackage{amsmath}
+\usepackage[thinc]{esdiff}  % easier/convenient derivatives and partial derivatives
+\usepackage{amssymb}
+\usepackage{subfiles}    % be able to compile the included sub-files
+\usepackage[explicit, calcwidth]{titlesec}
+\usepackage[normalem]{ulem}
+
+
+% \input{AstroComs}                   % Common Astro Commands
+% \input{CustComs}                   % Common Astro Commands
+\input{jabbrevs}                        % Journal Abbreviations
+\input{coms}                        % Journal Abbreviations
+
+% \newcommand{\hc}{h_\trt{c}}
+% \newcommand{\hs}{h_\trt{s}}
+\newcommand{\hsn}{h_\tr{s,n}}
+\newcommand{\hscirc}{h_\trt{s,circ}}
+\newcommand{\hcs}{h_\trt{c,s}}
+
+\newcommand{\frst}{f_\tr{r}}
+\newcommand{\frstgw}{f_{\trt{GW},r}}
+\newcommand{\frstorb}{f_{\trt{orb},r}}
+\newcommand{\fobsorb}{f_{\trt{orb},o}}
+\newcommand{\fobsgw}{f_{\trt{GW},o}}
+\newcommand{\frstn}{f_\trt{n,r}}
+\newcommand{\fobsn}{f_\trt{n,o}}
+
+\newcommand\erfc[1]{\mathrm{erfc}\left(#1\right)}
+\newcommand\erfcinv[1]{\mathrm{erfc}^{-1}\left(#1\right)}
+
+\newcommand{\lgw}{L_\trt{GW}}
+\newcommand{\lgwn}{L_{\trt{GW},n}}
+\newcommand{\lgwc}{L_\trt{GW,circ}}
+\newcommand{\egw}{\varepsilon_\trt{GW}}   % energy in GW
+% \newcommand{\thard}{\bigt_\tr{h}}
+% \newcommand{\thardi}{\bigt_{\tr{h},i}}
+% \newcommand{\thardij}{\bigt_{\tr{h},ij}}
+\newcommand{\tdur}{T_\trt{dur}}
+
+% == Terminology Shortcuts ==
+%\newcommand{\mbhb}{MBHB}  % {MBH-Binaries}
+
+\newcommand{\frest}{f_\trt{r}}
+\newcommand{\fobs}{f_\trt{o}}
+\newcommand{\fharm}{f_\trt{h}}
+
+\newcommand{\thard}{\tau_\trt{r}}
+\newcommand{\tgw}{\tau_\trt{gw}}
+% \newcommand{\tgwc}{\bigt_\tr{GW,circ}}
+\newcommand{\tgwc}{\tau_\trt{gw,circ}}
+
+
+\newcommand\mred{\mu_\trt{red}}
+
+\newcommand\snr{\mathcal{R}}
+\newcommand\snra{\mbox{$\mathcal{R}_A$}}
+\newcommand\snrb{\mbox{$\mathcal{R}_B$}}
+\newcommand\snrta{\mbox{$\mathcal{R}_A^T$}}
+\newcommand\snrtb{\mbox{$\mathcal{R}_B^T$}}
+\newcommand\pulsarsum{\sum_k \sum_{ij}}
+\newcommand\Gij{\Gamma_{ij}}
+
+
+\titleformat{\section}{\normalfont\Large\bfseries\color{Red}}{\thesubsection}{1em}{#1}[{\titlerule[0.8pt]}]
+\titleformat{\subsection}[block]{\large\bfseries}{\thetitle}{.5em}{#1}[\vspace{-8pt}\rule{\titlewidth}{1pt}]
+
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
+
+
+
+\begin{document}
+
+    \tableofcontents
+
+    % ===========================
+    % ====    Definitions    ====
+    % ===========================
+
+    \section{Definitions}
+
+        \begin{table}[h]
+        \centering
+        \begin{tabular}{@{} lcrc @{}} % Column formatting, @{} suppresses leading/trailing space
+            % \toprule
+            Name			& Symbol	& Description	& Equation \\ \hline
+            Total Mass 		& $M$		& Sum of individual masses: $M = m_1 + m_2$	& [\refeq{eq:chirp_mass}] \\
+            Mass Ratio		& $q$		& $q \equiv m_2 / m_1 \msp \mathrm{s.t.} \msp q \leq 1 \msp \& \msp m_2 < m_1$ & [\refeq{eq:chirp_mass}] \\
+            Chirp Mass		& $\mchirp$	& Characteristic GW mass 					& [\refeq{eq:chirp_mass}] \\
+            Reduced Mass	& $\mred$	& $\mred \equiv m_1 m_2 / (m_1 + m_2) = q/(1+q)$ 		& [\refeq{eq:chirp_mass}] \\ \hline
+            Semi-major axis & $a$		& Binary separation (rest frame), $a^3 / GM = (T / 2\pi)^2$. &  \\ \hline
+            r[est-frame]	& $X_{r}$	& Quantities evaluated in the source's rest-frame 	&	 	\\
+            o[bserver-frame]	& $X_{o}$	& Quantities evaluated in the observer's frame 	& 	\\
+
+            &				&												&	\\ \hline
+        \end{tabular}
+        \end{table}
+
+        \subsection{Binaries \& Orbits}
+            We adopt the convention that the \textbf{Chirp-Mass} is an intrinsic, invariant property of the binary (i.e.~it is not redshifted):
+            \begin{equation}
+                \label{eq:chirp_mass}
+                \mchirp = \frac{\left(m_1 m_2\right)^{3/5}}{M^{1/5}} = M \frac{q^{3/5}}{\left(1 + q\right)^{6/5}} = M^{2/5} \mred^{3/5}.
+            \end{equation}
+            Recall Kepler's law,
+            \begin{equation}
+                \frac{a^3}{GM} = \scale[2]{T}{2\pi} = \lr[-2]{2\pi \frstorb}.
+            \end{equation}
+
+            The GW \textbf{eccentricity function} is,
+            \begin{equation}
+                \label{eq:}
+                F(e) \equiv \frac{1 + \frac{73}{24} e^2 + \frac{37}{96} e^4}{\left( 1 - e^2\right)^{7/2}} = \sum_{n=1}^\infty g(n,e),
+            \end{equation}
+            and the GW \textbf{frequency distribution function} can be expressed as \citep[][Eq.~2.4]{enoki2007a},
+            \begin{equation}
+            \begin{split}
+                \label{eq:freq_dist_func}
+                g(n,e) \equiv \frac{n^4}{32} \Biggl(& \left[ J_{n-2}(ne) - 2eJ_{n-1}(ne) + \frac{2}{n} J_n (ne) + 2e J_{n+1} (ne) - J_{n+2} (ne) \vphantom{\frac{2}{n}}\right]^2 \\
+                &+ \left(1-e^2\right) \Bigl[J_{n-2}(ne) - 2eJ_n(ne) + J_{n+2}(ne)\Bigr]^2 + \frac{4}{3n^2}\Bigl[J_n(ne)\Bigr]^2 \Biggr),
+            \end{split}
+            \end{equation}
+            where $J_n(x)$ is the $n$th-order Bessel function of the first kind.  Note that for zero eccentricity, $g(n=2,0) = 1$ and $g(n\neq2, 0) = 0$.
+
+        % ====    Power Spectral Density    ====
+        \subsection{(Power) Spectral (Energy) Density \NOTE{NEEDS REVIEW}}
+            Noise \textbf{Power Spectral Density (PSD)} $S_n(f)$ has units of inverse frequency.  PSD is `one-sided' because the signal is real, and thus integrals over all frequencies can be replaced by ones over positive-frequency only (i.e.~$S_n(f) = S_n(-f)$).  PSD integrated over all positive frequencies gives the mean-square noise amplitude \citep{moore2015}.
+            \begin{equation}
+            \overline{|n(t)|^2} = \int_0^\infty S_n(f) \, df
+            \end{equation}
+            For source amplitudes \citep{rosado2015} (\textit{\textbf{NOTE:} the power-spectral-density is different for LIGO vs.~PTA}),
+            \begin{equation}
+            S_h(f) = \frac{h_c^2}{12 \pi^2 f^3}
+            \end{equation}
+
+            Extracting a signal involves constructing a `Wiener optimal filter'\footnote{The `filter' is an approximation to the input signal ($\hat{h}(t)$ approximating, in this case, $h(t)$), where it is assumed that the optimal filter can be expressed as a linear function of the measured signal, i.e. $\hat{h}_k = \sum_i l_{k-i} s_i$, and thus the coefficients $l_k$ must be solved for.  The solution is found by minimizing the error between the estimate and the true signal.}
+
+            % =============   Energy Density   ============
+            % \subsection{Energy Density}
+            \textbf{Energy Density} carried by a GW (averaged over several wavelengths/periods) is \citep{moore2015},
+            \begin{equation}
+            \rho c^2 = \frac{c^2}{16\pi G} \int_0^\infty \frac{\pi c^2}{4G} f^2 \, S_h(f) \, df.
+            \end{equation}
+            The \textbf{Spectral Energy Density} is defined as the integrand of the above, which is the energy per unit volume of space, per unit frequency \citep{moore2015},
+            \begin{equation}
+            S_E(f) = \frac{\pi c^2}{4 G} f^2 \, S_h(f);
+            \end{equation}
+            and an analogous expression for the noise simply replaces $S_h$ with $S_n$.  This is related to the fractional energy-density per logarithmic frequency interval as,
+            \begin{equation}
+            \Omega_{GW}(f) = \frac{f \, S_E(f)}{\rho_c c^2},
+            \end{equation}
+            where the cosmological critical density is,
+            \begin{equation}
+            \rho_c = \frac{3 H_0^2}{8\pi G}.
+            \end{equation}
+
+            \begin{equation*}
+            H_0^2 \, \Omega_{GW}(f) = \frac{8\pi G}{3 c^2} f \, S_E(f) = \frac{2 \pi^2}{3} \, f^3 \, S_h(f) = \frac{2\pi^2}{3} f^2 \left[h_c(f) \right]^2 = \frac{8\pi^2}{3} f^4 \left| \tilde{h}(f)\right|^2.
+            \end{equation*}
+
+
+
+    % ==========================
+    % ====    GW Sources    ====
+    % ==========================
+
+    \section{Gravitational Wave Sources}
+
+        \subsection{Time and Hardening Rates}
+
+            The hardening rate for a circular binary is \citep[][Eq.5.6]{Peters1964},
+            \begin{equation}
+                \label{eq:gw_hard}
+                \frac{da}{dt} = -\frac{64 \, G^3}{5 \, c^5} \frac{M_1 \, M_2 \, M}{a^3} F(e).
+            \end{equation}
+
+            The total time to go between separations $a_1$ and $a_2$ is then,
+            \begin{align}
+                \label{eq:gw_coal_time}
+                t & = \frac{5 \, c^5}{256 \, G^3} \frac{a_1^4 - a_2^4}{M_1 \, M_2 \, M} F(e)^{-1}, \\
+                & \approx 0.2 \, \rm{Gyr} \scale[4]{a}{0.1 \, \rm{pc}} \scale[3]{M}{10^9 \, \msol} \scale{1/q + 2 + q}{4}, \\
+            \end{align}
+
+            Following \citep{enoki2007a}, the standard hardening timescale is defined with respect to frequency, i.e.,
+            \begin{equation}
+                \thard \equiv \frac{d t_r}{d\ln f_r} = \frac{f_r}{df_r/dt_r} = - \frac{2}{3} \frac{a}{da/dt_r}.
+            \end{equation}
+            Note that this quantity does vary between the observer-frame and rest-frame, s.t. $\tau_o = \tau_r \cdot \lr{1+z}$.
+
+            The GW-hardening timescale (in the rest-frame) is,
+            \begin{align}
+                \label{eq:time_hard_gw}
+                \tgw & = \frac{\tgwc}{F(e)} \\
+                \tgwc & = \frac{5}{96}\left(\frac{G\mchirp}{c^3}\right)^{-5/3} \left(2 \pi \frstorb \right)^{-8/3}
+            \end{align}
+
+        \subsection{Energy, Power, and Strain}
+
+            GW power is emitted at integer harmonics of the orbital frequency, $\frstn = n \cdot \frstorb$, which is also redshifted to reach the observer-frame, $\fobsn = n \cdot \frstorb / (1+z)$.  The energy emitted in GWs, per interval of rest-frame frequency, integrated over binary lifetime, is \citet[][Eq.~3.10]{enoki2007a},
+            \begin{subequations}
+            \begin{align}
+                \frac{d \egw}{d \frstn} & = \int \lgwc(f_p) \, \frac{dt_r}{df_p} \, \sum_{n=1}^\infty \, g(n,e) \, \delta(\frstn - n f_p) \, d f_p \\
+                    & = \sum_{n=1}^\infty \left[ \lgwc(f_p) \frac{\tau_r}{n \, f_p} \, g(n,e) \right]_{f_p = \frstn/n} \\
+                    & = \sum_{n=1}^\infty \left[ \lgwn(f_p) \frac{\tau_r}{n \, f_p} \right]_{f_p = \frstn/n},
+            \end{align}
+            \end{subequations}
+            where the power-radiated at each harmonic, in the rest-frame, is:
+            \begin{equation}
+                \lgwn = \lgwc \cdot g(n,e).
+            \end{equation}
+            For circular binaries,
+            \begin{subequations}
+            \begin{align}
+                \frac{d \egw}{d \frstn} \bigg|_{\tr{circ}} & = \frac{\pi}{3 G} \lr[5/3]{G \mchirp} \lr[-1/3]{\pi \frstn}.
+            \end{align}
+            \end{subequations}
+
+            Total GW power emitted is the sum over harmonics \citep[][Eq.~2.2]{enoki2007a},
+            \begin{align}
+                \label{eq:lum_gw}
+                \lgw & = \sum_n \lgwn = \lgwc \sum_n g(n,e) = \lgwc \cdot F(e), \\
+                \lgwc & = \frac{32}{5 G c^5} \left(G\mchirp\right)^{10/3} \left( 2\pi \frstorb \right)^{10/3}.
+            \end{align}
+
+            The GW strain amplitude at a given harmonic can be related to the (rest-frame) luminosity as \citep[][Eq.~2.1]{Finn+Thorne-2000},
+            \begin{align}
+                \label{eq:strain_lum}
+                \hsn^2 & = \frac{G}{c^3} \, \frac{2}{n} \, \frac{\lgwn}{\lr[2]{2 \pi \, \frstorb} \, \comdist^2}, \\
+                    & = \frac{32}{5 c^8} \, \frac{2}{n} \, \frac{\left(G\mchirp\right)^{10/3}}{\comdist^2} \lr[4/3]{2\pi\frstorb} \cdot g(n,e).
+            \end{align}
+
+            The GW strain from a single source, over all harmonics, can be written as \citep[][Eq.~9]{amaro-seoane2010},
+            \begin{equation}
+                \label{eq:gw_strain_instant}
+                \hs^2(\frstgw) = \sum_{n=1}^\infty \hscirc^2(f_p) \left(\frac{2}{n}\right)^2 \, g(n,e) \bigg|_{f_p = \frstgw/n}.
+            \end{equation}
+            Here, the GW strain from a circular binary is \citep[][Eq.~7]{sesana2008} (sky and polarization averaged; equivalent to Eq.~\ref{eq:strain_lum}),
+            \begin{equation}
+            \begin{split}
+                \label{eq:gw_strain_amp}
+                \hscirc
+                    & = \frac{8}{10^{1/2}} \frac{\left(G\mchirp\right)^{5/3}}{c^4 \, \comdist} \left(2 \pi \frstorb \right)^{2/3}, \\
+                    & = \frac{8}{10^{1/2}} \frac{\left(G\mchirp_o\right)^{5/3}}{c^4 \, \lumdist} \left(2 \pi \fobsorb \right)^{2/3},
+            \end{split}
+            \end{equation}
+            for a comoving distance $\comdist$, and luminosity distance $\lumdist$.  Note that the second version (using luminosity distance), also uses an \textit{observed} chirp-mass and observer-frame frequency (see \secref{sec:app_redshift}).
+
+            \subsubsection{Characteristic Strain \NOTE{NEEDS REVIEW}}
+            The \textbf{characteristic strain} models the effective GW amplitude when considering signal-to-noise and detectability.  For periodic signals, power accumulates proportionally to the number of cycles, such that $\hc^2 = n_\trt{cycles} \cdot \hs^2$.  There are two regimes to consider.  If the binary is very slowly evolving, $\lr{d\fobsgw/dt_o} \cdot \tdur \ll \Delta f_o$ (i.e.~the change in frequency over the course of observations is very small compared to the frequency bin), then the number of cycles is,
+            \begin{equation}
+                n_\trt{cycles,slow} = \fobsgw \cdot \tdur.
+            \end{equation}
+            If the binary is quickly evolving, then the number of cycles while the binary is emitting in the frequency bin of interest is what's relevant, i.e.
+            \begin{equation}
+                n_\trt{cycles,fast} = \fobsgw \cdot T_\trt{band} \msp s.t. \msp T_\trt{band} \equiv \scale{\Delta f_o }{ d\fobsgw / dt_o }.
+            \end{equation}
+            Note that the term in parentheses is \textit{not} the same as the GW hardening time-scale, because the frequency bin-size may be very different from the binary frequency (i.e., in general, $\Delta f_o \neq \fobsgw$).  Note also that in this latter case, the characteristic strain is not well defined \textit{at} a particular frequency, but is instead defined \textit{over} a frequency bin.  Typically, for frequency bins determined by Nyquist sampling, $\Delta f_o = 1 / \tdur$.  Putting these together we can write,
+            \begin{equation}
+                \hc^2(f_o,\Delta f_o|\tdur) = \hs^2(f_o) \cdot \lrs{\fobsgw \cdot \min\!\lr{\tdur, \, T_\trt{band}}}.
+            \end{equation}
+
+
+
+    % ===============================
+    % ====    GWB Calculation    ====
+    % ===============================
+
+        \subsection{Gravitational Wave Background Calculation}
+            \label{sec:gw_gwb_calc}
+
+            It was shown by \citet[][Eq.5]{Phinney-2001} that the GWB spectrum, can be expressed as
+            (see also: \citealt[][Eq.~3.5/10/11]{enoki2007a}; \citealt[][Eq.5]{sesana2008}):
+            \begin{subequations}
+            \begin{align}
+                % \label{eq:}
+                h_c^2(f)
+                & = \frac{4G}{\pi c^2 f^2} \int dz \; \frac{dn}{dz} \, \frac{1}{1+z} \scale{dE_\trt{GW}}{d \ln f_r} \bigg|_{f_r=f\lr{1+z}} \\
+                & = \frac{4G}{\pi c^2 f} \int dz \; \frac{dn}{dz} \, \scale{dE_\trt{GW}}{d f_r} \bigg|_{f_r=f\lr{1+z}}.
+            \end{align}
+            \end{subequations}
+
+            Following \citet[][Eq.~3.5/10/11; same as Eq.~\ref{eq:lum_gw} above]{enoki2007a}:
+            \begin{subequations}
+            \begin{align}
+                \hc^2(f) = & \frac{4G}{\pi c^2 f} \int dz \, \frac{dn}{dz}
+                    \sum_{n=1}^\infty \left[ \lgwc \frac{\thard}{n \, f_p} \, g(n,e) \right] \bigg|_{f_p = f(1+z)/n} \\
+                h^2_{c,circ}(f) = & \frac{4 \pi}{3c^2} \lr[-4/3]{\pi f} \int dM_1 \, dM_2 \, dz \, n_c\left(M_1, M_2, z\right) \,
+                    \lr[-1/3]{1+z} \lr[5/3]{G \mchirp},
+            \end{align}
+            \end{subequations}
+            where the last relation assumes circular orbits, and purely GW-driven evolution. \\
+
+            Under the assumption of a smooth/continuous distribution, and purely circular and GW-driven evolution, we can then write:
+            \begin{equation}
+                h_c = A_0 \scale[-2/3]{f}{f_0} = A_{\pyr} \scale[-2/3]{f}{1 \, \pyr}.
+            \end{equation}
+
+            % ===== Monte-Carlo
+            \subsubsection{Monte Carlo}
+
+            From \citet[][Eq.~10]{sesana2008},
+            \begin{align}
+                h_c^2(f) = \int_0^\infty \!\! dz \; \frac{d^2 N}{dz \, d\ln f_r} \; h^2\lr{f_r}.
+            \end{align}
+            From \citet[][Eq.~6]{sesana2008} we can write,
+            \begin{align}
+                \frac{d^2 N}{dz \, d\ln f_r} = \frac{d n_c}{dz} \frac{dz}{dt} \frac{dt}{d\ln f_r} \frac{d V_c}{dz}.
+            \end{align}
+            From cosmography \citep[e.g.][]{Hogg1999},
+            \begin{subequations}
+            \begin{align}
+                \frac{dz}{dt} = H_0 \lr{1+z} E(z) \\
+                \frac{d V_c}{dz} = 4\pi \frac{c}{H_0} \frac{d_c^2}{E(z)} \\
+                d_L = d_c \, (1+z)
+            \end{align}
+            \end{subequations}
+            Putting this together we have,
+            \begin{equation}
+                h_c^2(f) = \int_0^\infty \!\! dz \; \frac{dn_c}{dz} \, h^2\lr{f_r} \, 4\pi c \, d_c^2 \lr{1+z} \, \frac{f_r}{df_r / dt},
+            \end{equation}
+            and when taking the strain to be due to a circular binary:
+            \begin{equation}
+                h_c^2(f) = \int_0^\infty \!\! dz \; \frac{256 \pi}{10 c^7} \frac{dn_c}{dz} \, \frac{f_r}{df_r / dt} \, \lr[10/3]{G \mathcal{M}} \, \lr[4/3]{2\pi f_r} \, \lr{1+z}.
+            \end{equation}
+            For circular, GW-driven binaries this can be simplified to:
+            \begin{equation}
+                h_c^2(f) = \int_0^\infty \!\! dz \; \frac{4 \pi}{3 c^2} \frac{dn_c}{dz}  \, \frac{\lr[5/3]{G \mathcal{M}}}{\lr[1/3]{1+z}} \, \lr[-4/3]{2\pi f_r},
+            \end{equation}
+
+            If this is being calculated from a finite volume (e.g.~simulation), then we can associate the comoving-number-density of sources at a given redshift with the number of binaries per-unit comoving volume, i.e.,
+            \begin{align}
+                \frac{dn_c}{dz} \, dz = N_\trt{fv}(z)/V_\trt{c,fv}.
+            \end{align}
+
+
+    % ====    Gravitational Wave Single Sources    ====
+
+    \subsection{Gravitational Wave Single Sources}
+    \label{sec:gw_singles_calc}
+
+    Following \citet{taylor201505}: each polarization of the (eccentric) strain can be calculated as,
+
+    \begin{align}
+    \label{eq:}
+    h_{+}(t) = & \sum_n - (1 + \cos^2 \iota) \Big[ a_n \cos(2\gamma) - b_n \sin(2\gamma)\Big] + (1+\cos^2 \iota) c_n, \nonumber \\
+    h_{\times}(t) = & \sum_n 2\cos \iota \Big[a_n \sin(2\gamma) + b_n \cos(2\gamma)\Big],
+    \end{align}
+    where,
+    \begin{align}
+    \label{eq:}
+    a_n & = -n\zeta \omega^{2/3}\bigg[J_{n-2}(ne) - 2eJ_{n-1}(ne) + (2/n)J_n(ne) + 2 e J_{n+1}(ne) - J_{n+2}(ne)\bigg]\cos\left[n \, l(t)\right], \nonumber \\
+    b_n & = -n\zeta \omega^{2/3} (1 - e^2)^{1/2}\bigg[J_{n-2}(ne) - 2J_n (ne) + J_{n+2}(ne)\bigg]\sin\left[n \, l(t)\right], \\
+    c_n & = \, 2 \zeta \omega^{2/3} J_n (ne)\cos\left[n \, l (t)\right]. \nonumber
+    \end{align}
+    Here the amplitude parameter is $\zeta = \mchirp^{5/3} / d_L$, $\omega = 2 \pi F_o$---where the (observed) \textbf{Keplerian mean orbital frequency} is $F_o$---and the \textbf{mean anomaly} is,
+    \begin{equation}
+    l(t) = l_0 + 2\pi \int_{t_0}^{t} F_o(t') dt',
+    \end{equation}
+    where $l_0$ is the mean anomaly at $t_0$.  The azimuthal angle $\gamma$ is measures the direction of pericenter relative to,
+    \begin{equation}
+    \hat{x} \equiv \frac{\hat{\Omega} + \hat{L} \cos \iota}{\left(1 - \cos^2 \iota\right)^{1/2}},
+    \end{equation}
+    and the \textbf{binary orbital inclination angle} is defined as,
+    \begin{equation}
+    \cos \iota = - \hat{L} \cdot \hat{\Omega}.
+    \end{equation}
+
+    Consider a unit vector pointing from the binary to the observer $\hat{\Omega}$.  The binary system is oriented relative to a right-handed basis triad $\{\hat{n}, \hat{p}, \hat{q}\}$, s.t.
+
+    \begin{align}
+    \hat{n} & = - \hat{\Omega}, \nonumber \\
+    & = \{\sin \theta \cos \phi,\msp  \sin\theta \sin \phi, \msp \cos\theta  \} \nonumber \\
+    \hat{p} & = \frac{\hat{n} \times \hat{L}}{\left| \hat{n} \times \hat{L}\right|} \\
+    & = \{\cos\psi\cos\theta\cos\phi - \sin\psi\sin\phi , \msp
+    \cos\psi\cos\theta\sin\phi + \sin\psi\cos\phi, \msp
+    -\cos\psi\sin\theta\}, \nonumber \\
+    \hat{q} & = \hat{p} \times \hat{n} \nonumber \\
+    & = \{\sin\psi \cos\theta \cos\phi + \cos\psi \sin\phi,
+    \msp \sin\psi \cos\theta \sin\phi - \cos\psi \cos\phi,
+    \msp -\sin\psi \sin\theta \}. \nonumber
+    \end{align}
+
+    The spherical polar angles are $\theta = (\pi/2 - \mathrm{declination})$---the azimuthal angle, and $\phi = \mathrm{R.A.}$---the angle within the plane.  The angle $\psi$ is the angle between $\hat{p}$ and a line of constant $\phi$ (RA) when the binary is seen by the observer, at the origin. \\
+
+    The binary basis vectors $\hat{p}$, $\hat{q}$ are perpendicular to the direction between the observer and the binary (and thus to the direction of observed GW propagation).  They can define basis tensors,
+    \begin{align}
+    e^{+}_{ab} & = \hat{p}_a \hat{p}_b - \hat{q}_a \hat{q}_b, \nonumber \\
+    e^{\times}_{ab} & = \hat{p}_a \hat{q}_b + \hat{q}_a \hat{p}_b.
+    \end{align}
+    The GW-tensor can be written in the transverse-traceless gauge then as,
+    \begin{equation}
+    h_{ab}(t, \hat{\Omega}) = h_{+}(t) \, e^{+}_{ab}(\hat{\Omega}) + h_{\times}(t) \, e^{\times}_{ab}(\hat{\Omega}).
+    \end{equation}
+
+    % =================================
+    % ====    Detector Response    ====
+    % =================================
+
+    \section{Detector Response}
+    \label{sec:det_resp}
+    Detector output $s(t)$ contains both noise and signal, i.e.~$s(t) = n(t) + h(t)$.
+
+    % ====    Strain    ====
+    \subsection{Strain}
+    The \textbf{Characteristic Strain} $h_c$ is designed to include the effect of integrating an inspiralling signal over time, which builds up the Signal-to-Noise Ratio (SNR).
+    \begin{equation}
+    \label{eq:strain_char}
+    \left[h_c(f)\right]^2 = 4 \, f^2\, \left| \tilde{h}(f)\right|^2
+    \end{equation}
+    where $\tilde{h}(f)$ is the Fourier transform of the strain,
+    \begin{equation}
+    \tilde{h}(f) = \mathcal{F}\{ h(t) \}(f) = \int_{-\infty}^\infty h(t) \,  \exp\left(-2\pi \, i f t\right).
+    \end{equation}
+    The characteristic-strain can be related to individual source strain as,
+    \begin{equation}
+    h_c^2 = \frac{\sum_k h_k^2 \, f_k}{\Delta f},
+    \end{equation}
+    where the summation is over all sources within a frequency bin of width $\Delta f = 1/T$.
+    The noise counterpart is given by \citep{moore2015},
+    \begin{equation}
+    \left[h_n(f)\right]^2 = f \, S_n(f).
+    \end{equation}
+    The resulting SNR is,
+    \begin{equation}
+    \rho^2 = \int_{-\infty}^{\infty} \left[ \frac{h_c(f)}{h_n(f)} \right]^2 \, d\left(\log f\right)
+    \end{equation}
+    In a log-log plot, the area between an $h_c(f)$ and $h_n(f)$ curve is thus a measure of the SNR.  Eq.~\ref{eq:strain_char} does *not* work for a monochromatic source, however, instead it should be replaced by the wave amplitude times the square-root of the number of periods observed, i.e.
+    \begin{equation}
+    \left[h_{c,mono}(f)\right]^2 \approx N \left|\tilde{h}_{mono}(f)\right|^2,
+    \end{equation}
+    where $N = f^2 / \dot{f}$.
+
+    % ====    Pulsar Timing Arrays    ====
+    \subsection{Pulsar Timing Arrays}
+
+    Order of magnitude strain sensitivity can be calculated as \citep[][Eq.~21]{rajagopal1995},
+
+    \begin{equation}
+    h \sim \frac{\sigma}{\tgw} \left( N_\mathrm{obs} T_\mathrm{obs} \right)^{-1/2} = \frac{\sigma}{\tgw} \left( \frac{T_\mathrm{obs}}{\Delta t} \right)^{-1/2}
+    \end{equation}
+
+    where $\sigma$ is the characterisitic arrival time measurement accuracy, $\tgw$ is the GW period, $N_\mathrm{obs}$ is the number of TOA measured per-year, and the $T_\mathrm{obs}$ is the total observing baseline in years.
+
+    The timing residuals from a particular GW source can be calculated as \citep[][Eq.~20]{sesana2009},
+    \begin{equation}
+    \delta t_\textrm{\tiny GW} = \frac{8}{15} \alpha(f) \left(f T_\textrm{obs}\right)^{1/2},
+    \end{equation}
+    where the prefactor comes from the angle average of source inclinations, $f$ is the GW frequency, $T_\textrm{obs}$ is the total observing time, and $\alpha(f)$ is the characteristic amplitude of the GW induced residuals given as,
+    \begin{equation}
+    \alpha(f) = \left(\frac{G \mchirp}{c^3}\right)^{5/3} \frac{c}{d_L} \left( \pi f \right)^{-1/3}
+    \end{equation}
+
+    % =============   Detection Formalism   ============
+    \subsection{Detection Formalism}
+    Following \citep{rosado2015}.  Consider a \textbf{False Alarm Probability (FAP)} $\alpha$ with a threshold value $\alpha_0 = 0.001$, and a \textbf{Detection Probability (DP)} $\gamma$ with a threshold value of $\gamma_0 = 0.95$.
+
+    The \textbf{Hellings \& Downs (1983) Curve ("Overlap Reduction Function")} is given by,
+    \begin{equation}
+    \Gamma_{ij} = \frac{3}{2} \gamma_{ij} \, \ln \left(\gamma_{ij}\right) - \frac{1}{4}\gamma_{ij} + \frac{1}{2} + \frac{1}{2}\delta_{ij}
+    \end{equation}
+    where
+    \begin{equation}
+    \gamma_{ij} = \frac{1}{2}\left[1 - \cos(\theta_{ij})\right],
+    \end{equation}
+    where the angle between pulsars $i$ and $j$ is $\theta_{ij}$.
+
+    \textbf{Spectral Energy Density} for a characteristic strain $h_c$ is,
+    \begin{equation}
+    S_h = \frac{h_c^2}{12 \pi^2 f^3}.
+    \end{equation}
+    The \textit{expected power spectral density is also required}, $S_{h0}$.
+
+    Each pulsar has a \textbf{Noise Power Spectrum} $P_i$, assuming this is described by a Gaussian random process with RMS $\sigma_i$ then,
+    \begin{equation}
+    P_i = 2\sigma_i^2 \Delta t
+    \end{equation}
+
+    % ==== A-Statistic ====
+    \subsubsection{A-Statistic}
+    Maximize $S/N_A = \mu_1 / \sigma_0$.
+
+    \noindent \textbf{Expectation Value} of The Statistic In the Presence of a Signal
+    \begin{equation}
+    \mu_{1A} = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_h \, S_{h0}}{P_i \, P_j}
+    \end{equation}
+
+    \noindent Variance of The Statistic In the \textbf{Absence} of a Signal
+    \begin{equation}
+    \sigma_{0A}^2 = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_{h0}^2}{P_i \, P_j}
+    \end{equation}
+
+    \noindent Variance of The Statistic In the \textbf{Presence} of a Signal
+    \begin{equation}
+    \sigma_{1A}^2 = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_{h0}^2}{\lr{P_i \, P_j}^2} \left[(P_i + S_h)(P_j + S_h) + \Gamma_{ij}^2 S_h^2\right]
+    \end{equation}
+
+    \noindent \textbf{Detection-Probability A}
+    \begin{equation}
+    \gamma_A
+    \end{equation}
+
+    \noindent \textbf{Signal-to-Noise Threshold A}
+    \begin{equation}
+    \label{eq:snr_thresh_a}
+    \snr_A^T = \sqrt{2} \left[ \erfcinv{2\alpha_0} - \frac{\sigma_1}{\sigma_0} \erfcinv{2\gamma_0} \right]
+    \end{equation}
+
+    \noindent \textbf{Signal-to-Noise A}
+    \begin{equation}
+    \label{eq:snr_a}
+    \snr_A^2 = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_h^2}{\lr{P_i P_j}^2}
+    \end{equation}
+
+    % ==== B-Statistic ====
+    \subsubsection{B-Statistic}
+    Maximize $S/N_A = \mu_1 / \sigma_1$.
+
+    \noindent \textbf{Expectation Value} of The Statistic In the Presence of a Signal
+    \begin{equation}
+    \mu_{1B} = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_h \, S_{h0}}{\lr{P_i + S_{h0}} \lr{P_j + S_{h0}} + \Gamma_{ij}^2 \, S_{h0}^2}
+    \end{equation}
+
+    \noindent Variance of The Statistic In the \textbf{Absence} of a Signal
+    \begin{equation}
+    \sigma_{0B}^2 = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_{h0}^2 P_i \, P_j}{\left[{\lr{P_i + S_{h0}} \lr{P_j + S_{h0}} + \Gamma_{ij}^2 \, S_{h0}^2}\right]^2}
+    \end{equation}
+
+    \noindent Variance of The Statistic In the \textbf{Presence} of a Signal
+    \begin{equation}
+    \sigma_{1B}^2 = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_{h0}^2 \left[ \lr{P_i + S_h} \lr{P_j + S_h} + \Gamma_{ij}^2 \, S_h^2\right]}{\left[{\lr{P_i + S_{h0}} \lr{P_j + S_{h0}} + \Gamma_{ij}^2 \, S_{h0}^2}\right]^2}
+    \end{equation}
+
+    \noindent \textbf{Detection-Probability B}
+    \begin{equation}
+    \gamma_B = \frac{1}{2} \erfc{ \frac{\sqrt{2} \, \sigma_0 \erfcinv{2\alpha_0} - \mu_1}{\sqrt{2} \, \sigma_1} }
+    \end{equation}
+
+    \noindent \textbf{Signal-to-Noise Threshold B}
+    \begin{equation}
+    \label{eq:snr_thresh_b}
+    \snr_B^T = \sqrt{2} \left[ \frac{\sigma_0}{\sigma_1} \erfcinv{2\alpha_0} - \erfcinv{2\gamma_0} \right]
+    \end{equation}
+
+    \noindent \textbf{Signal-to-Noise B}
+    \begin{equation}
+    \label{eq:snr_b}
+    \snr_B^2 = 2 \pulsarsum \frac{\Gamma_{ij}^2 \, S_h^2}{P_i P_j + S_h\lr{P_i + P_j} + S_h^2\lr{1 + \Gamma_{ij}^2}}
+    \end{equation}
+
+
+    \begin{table*}\centering
+    \renewcommand{\arraystretch}{1.2}
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lcc@{}}
+    % \toprule
+    Name 					& A-Statistic ($S/N_A = \mu_1 / \sigma_0$)		& B-Statistic ($S/N_A = \mu_1 / \sigma_1$)		\\ % \midrule
+    Detection Probability	&												& $\gamma_B = \frac{1}{2} \erfc{ \frac{\sqrt{2} \, \sigma_0 \erfcinv{2\alpha_0} - \mu_1}{\sqrt{2} \, \sigma_1} }$												\\
+    % \bottomrule
+    \end{tabular}
+    \caption{}
+    \label{tab:}
+    \end{table*}
+
+    % =============   Sensitivity Curves with SNR  ============
+    \subsection{Sensitivity Curves using the Signal-to-Noise Ratio}
+    The `measured' SNR from a given signal power-spectral-density (PSD; $S_h$) can be calculated using Eqs.~\ref{eq:snr_a}~\&~\ref{eq:snr_b}.  By taking $S_h \rightarrow S_h^T$, and setting $\snr \equiv SNR = SNR^T$ as calculated from Eqs.~\ref{eq:snr_thresh_a}~\&~\ref{eq:snr_thresh_b}, we can calculate the `threshold' PSD as,
+    \begin{equation}
+    S_{h,A}^T = \snrta \frac{P_i \, P_j}{2 \Gamma_{ij}}
+    \end{equation}
+    and
+    \begin{equation}
+    S_{h,B}^T = \frac{
+    \snrtb^2 \left(P_i + P_j\right) \pm \left[ \snrtb^4 \left(P_i + P_j\right)^2 + 4\snrtb^2 P_i P_j \left( \Gij^2 \left[2 - \snrtb^2\right] - \snrtb^2\right)\right]^{1/2}
+    }{
+    2\left[\Gij^2\left(2 - \snrtb^2\right) - \snrtb^2\right]
+    }
+    \end{equation}
+
+    % ==================================
+    % ====  MBH Binary Populations  ====
+    % ==================================
+
+    \section{Binary Populations}
+
+    Define the (comoving-) number density of sources as, $n \equiv dN / dV_c$, and the distribution function of sources as $f(M,a,z) = d^2 n(M,a,z) / dM da$.  Here $M$ is the mass of each systems, $a$ is the binary separation, and $z$ is the redshift.  Note that binary frequency $f$ could be used almost interchangeably with $a$, but that both evolve as a function of time or equivalently redshift.  This formalism can easily be extended to include other parameters, such as mass-ratio and eccentricity ($q$ and $e$).  We can write the conservation equation for binaries as of function of redshift as,
+    \begin{equation}
+    \label{eq:conservation}
+    \diffp{f}{z} + \diffp{}{m} \lrs{f \diffp{m}{z}} + \diffp{}{a} \lrs{f \diffp{a}{z}} = S_f(m, a, z).
+    \end{equation}
+    Here $S_f$ is a source/sink function that can account for the creation or destruction of binaries.  Binary coalescence (i.e.~as $a\rightarrow 0$) for example, can be treated using $S_f$ as a sink term.  The formation/creation of binaries is less intuitive as it depends on the particular masses/separations (etc) that define a binary.  If `binary' includes more distant pairs of MBHs, then anytime a new MBH forms (i.e.~from early universe seed formation) there will be some distance ($a$) to the nearest MBH which could be considered a binary companion.  The situation gets more complex for higher-order multiple systems.  Likely each multiple (including an isolated MBH) should be considered as a different species with a separate continuity equation, and the source/sink terms are used to convert between species.  For now we consider only binaries, and assume that all binary `formation' is encapsulated in practice from binaries moving from one part of parameter space (i.e.~large separations and redshifts) to other parts of parameter space (i.e.~smaller separations and redshifts, which are detectable).
+
+    We consider the standard \citep[e.g.~Sesana style; see][]{Chen+2019} semi-analytic model (SAM) formalism of MBH binary populations.  In this style of calculation, $f$ is determined in a region of parameter space that can be observed/estimated, and this is \textit{evolved} to find the distribution in a different region of parameter space that is of interest.  We will express the distribution function as a product of a mass-function, and a pair fraction:
+    \begin{equation}
+    \label{eq:dist_func}
+    f(M,a,z) = \Phi(M, z) \cdot F_a(M, a, z).
+    \end{equation}
+    In \citet{Chen+2019}, for example, the pair fraction is measured over some (unspecified) range of separations, and the separation-dependence is suppressed, i.e.~$f(M, z) = \Phi(M, z) \cdot F(M, z)$ s.t.~$F = \int_{a_0}^{a_1} F_a \, da$.
+    The evolution of the distribution function can be derived as follows.  First, from $\eqref{eq:conservation}$, we separate terms into redshift- and time- dependency:
+    \begin{equation}
+    \diffp{f}{z} + \diffp{t}{z}\lr{\diffp{}{m} \lrs{f \diffp{m}{t}} + \diffp{}{a} \lrs{f \diffp{a}{t}}} = S_f(m, a, z).
+    \end{equation}
+    We assume that the mass change of binaries is negligible, $\diffp{m}{t} = 0$, and by ignoring coalescence (in our parameter space of interest) we can set $S_f = 0$, giving us:
+    \begin{equation}
+    \diffp{f}{z} = - \diffp{t}{z} \diffp{}{a} \lrs{f \diffp{a}{t}}.
+    \end{equation}
+    Now we plug-in \eqref{eq:dist_func} to the R.H.S.:
+    \begin{equation}
+    \diffp{f}{z} = - \diffp{t}{z} \Phi(M,z) \diffp{}{a} \lrs{F(M,a,z) \diffp{a}{t}}.
+    \end{equation}
+
+    The binary population is assumed to be changing only in separation and redshift, which are related by $\partial a / \partial z = (\partial a / \partial t) (\partial t / \partial z)$.  Because the overall number-density is conserved, we can take a finite step in separation and time/redshift, $a\rightarrow a'$ and $z\rightarrow z'$.  Here the time it takes for a binary to go from $a \rightarrow a'$ is $\tau(M,a,z|a')$ which leads to a redshift at the later time of $z' = z'(t + \tau)$.  The standard expression \citep[e.g.~][~Eq.~5]{Chen+2019}, requires making the approximation that,
+    \begin{equation}
+    \diffp{}{a} \lrs{F(M,a,z) \diffp{a}{t}} \approx \frac{F}{\Delta t} = \frac{F}{\tau(M,a,z|a')}.
+    \end{equation}
+    \note{Does this require assuming $\diffp{F}{a} = 0$ ??}
+    Thus we finally get,
+    \begin{equation}
+    \diffp{f(M,a',z')}{{z'}} = \diffp{n}{{M}{a'}{z'}} = - \diffp{t}{z} \frac{\Phi(M,z) \, F(M,a,z)}{\tau(M,a,z|a')}.
+    \end{equation}
+
+
+    \appendix
+
+    \section{Redshifting of GW Quantities}
+    \label{sec:app_redshift}
+
+        \subsection{Chirp Mass}
+
+            We can define the `chirp' timescale as $t_\trt{chirp} \equiv f / \dot{f}$.  Note that $f_r = f_o \cdot (1+z)$, and $\Delta t_o = \Delta t_r \cdot (1+z)$, and thus that $\left| df / dt \right|_r = \left| df / dt \right|_o \lr[2]{1+z}$.  Unsurprisingly, then, $t_\trt{chirp,o} = t_\trt{chirp,r} \cdot \lr{1+z}$.  For GW-driven evolution, we can write the expression for the chirp time as \citep[][Eq.3]{DOrazio+Loeb-2021},
+            \begin{equation}
+                \label{eq:time_chirp}
+                t_\trt{chirp,r} \equiv \frac{f_r}{\dot{f_r}} = \frac{5}{96} \scale[-5/3]{G \mchirp}{c^3} \lr[-8/3]{2\pi \frstorb}.
+            \end{equation}
+            This is a measurable time-interval, and thus we can related the observer- and rest- frames as, $t_\trt{chirp,o} = t_\trt{chirp,r} \lr{1+z}$.  If we take \eqref{eq:time_chirp} as the \textit{definition} of chirp mass as a measured quantity\footnote{i.e.~do not think of it as an intrinsic property of a binary}, we can then use \eqref{eq:time_chirp} (along with, $f_r = f_o \cdot \lrs{1+z}$) to show that,
+            \begin{equation}
+                \label{eq:mchirp_redshift}
+                \mathcal{M}_o = \mathcal{M}_r \cdot \lr{1+z}.
+            \end{equation}
+
+        \subsection{GW Strain Amplitude}
+
+            The relationship between rest-frame strain amplitude (now written as $h_r$, for simplicity) and luminosity (here, $\dot{E}$ for convenience), is given in \eqref{eq:strain_lum}:
+            \begin{equation}
+                h_r^2 = k \, \frac{\dot{E}_r}{d_c^2 \, f_r^2}.
+            \end{equation}
+            If we write $\dot{E} = dE/dt$, we can more clearly see that $\dot{E}_r = \dot{E}_o \, \lr[2]{1+z}$, where there is one factor of redshift for time-dilation, and one-factor for energy (e.g. redshifting of photons/gravitons).  Combined with $f_r = f_o \, \lr{1+z}$, we can then write,
+            \begin{equation}
+                h_r^2 = k \, \frac{\dot{E}_r}{d_c^2 \, f_r^2} = k \, \frac{\dot{E}_o \, \lr[2]{1+z}}{d_c^2 \, f_o^2 \, \lr[2]{1+z}} = k \, \frac{\dot{E}_o}{d_c^2 \, f_o^2} = h_o^2 \msp \therefore \msp h_r = h_o,
+            \end{equation}
+            showing that strain amplitude is invariant (as we would expect for a dimensionless measure of distance deformation).  Note that we would get the same result starting (and ending) with $\lumdist$ instead of comoving distance, but in either case we must continue to use the same distance measure on both sides of the equation.
+
+            Starting from the standard strain amplitude expression (i.e.~first line of Eq.~\ref{eq:gw_strain_amp}) and using the redshifting of chirp-mass expression \eqref{eq:mchirp_redshift}, we can then show that the second line of Eq.~\ref{eq:gw_strain_amp} naturally follows, i.e. that,
+            \begin{equation}
+                \hscirc
+                = \frac{8}{10^{1/2}} \frac{\left(G\mchirp\right)^{5/3}}{c^4 \, \comdist} \left(2 \pi \frstorb \right)^{2/3}
+                = \frac{8}{10^{1/2}} \frac{\left(G\mchirp_o\right)^{5/3}}{c^4 \, \lumdist} \left(2 \pi \fobsorb \right)^{2/3}.
+            \end{equation}
+
+
+        \subsection{GW Stain-Ampliude Pre-factor}
+
+
+    %\bibliographystyle{plain}
+    \bibliographystyle{plainnat}
+    \bibliography{gw_refs}
+
+\end{document}
