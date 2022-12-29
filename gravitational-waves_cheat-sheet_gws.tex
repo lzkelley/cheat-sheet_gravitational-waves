@@ -157,11 +157,11 @@
         \subsection{(Power) Spectral (Energy) Density \NOTE{NEEDS REVIEW}}
             Noise \textbf{Power Spectral Density (PSD)} $S_n(f)$ has units of inverse frequency.  PSD is `one-sided' because the signal is real, and thus integrals over all frequencies can be replaced by ones over positive-frequency only (i.e.~$S_n(f) = S_n(-f)$).  PSD integrated over all positive frequencies gives the mean-square noise amplitude \citep{moore2015}.
             \begin{equation}
-            \overline{|n(t)|^2} = \int_0^\infty S_n(f) \, df
+                \overline{|n(t)|^2} = \int_0^\infty S_n(f) \, df
             \end{equation}
             For source amplitudes \citep{rosado2015} (\textit{\textbf{NOTE:} the power-spectral-density is different for LIGO vs.~PTA}),
             \begin{equation}
-            S_h(f) = \frac{h_c^2}{12 \pi^2 f^3}
+                S_h(f) = \frac{h_c^2}{12 \pi^2 f^3}
             \end{equation}
 
             Extracting a signal involves constructing a `Wiener optimal filter'\footnote{The `filter' is an approximation to the input signal ($\hat{h}(t)$ approximating, in this case, $h(t)$), where it is assumed that the optimal filter can be expressed as a linear function of the measured signal, i.e. $\hat{h}_k = \sum_i l_{k-i} s_i$, and thus the coefficients $l_k$ must be solved for.  The solution is found by minimizing the error between the estimate and the true signal.}
@@ -170,23 +170,23 @@
             % \subsection{Energy Density}
             \textbf{Energy Density} carried by a GW (averaged over several wavelengths/periods) is \citep{moore2015},
             \begin{equation}
-            \rho c^2 = \frac{c^2}{16\pi G} \int_0^\infty \frac{\pi c^2}{4G} f^2 \, S_h(f) \, df.
+                \rho c^2 = \frac{c^2}{16\pi G} \int_0^\infty \frac{\pi c^2}{4G} f^2 \, S_h(f) \, df.
             \end{equation}
             The \textbf{Spectral Energy Density} is defined as the integrand of the above, which is the energy per unit volume of space, per unit frequency \citep{moore2015},
             \begin{equation}
-            S_E(f) = \frac{\pi c^2}{4 G} f^2 \, S_h(f);
+                S_E(f) = \frac{\pi c^2}{4 G} f^2 \, S_h(f);
             \end{equation}
             and an analogous expression for the noise simply replaces $S_h$ with $S_n$.  This is related to the fractional energy-density per logarithmic frequency interval as,
             \begin{equation}
-            \Omega_{GW}(f) = \frac{f \, S_E(f)}{\rho_c c^2},
+                \Omega_{GW}(f) = \frac{f \, S_E(f)}{\rho_c c^2},
             \end{equation}
             where the cosmological critical density is,
             \begin{equation}
-            \rho_c = \frac{3 H_0^2}{8\pi G}.
+                \rho_c = \frac{3 H_0^2}{8\pi G}.
             \end{equation}
 
             \begin{equation*}
-            H_0^2 \, \Omega_{GW}(f) = \frac{8\pi G}{3 c^2} f \, S_E(f) = \frac{2 \pi^2}{3} \, f^3 \, S_h(f) = \frac{2\pi^2}{3} f^2 \left[h_c(f) \right]^2 = \frac{8\pi^2}{3} f^4 \left| \tilde{h}(f)\right|^2.
+                H_0^2 \, \Omega_{GW}(f) = \frac{8\pi G}{3 c^2} f \, S_E(f) = \frac{2 \pi^2}{3} \, f^3 \, S_h(f) = \frac{2\pi^2}{3} f^2 \left[h_c(f) \right]^2 = \frac{8\pi^2}{3} f^4 \left| \tilde{h}(f)\right|^2.
             \end{equation*}
 
 
@@ -230,21 +230,16 @@
             GW power is emitted at integer harmonics of the orbital frequency, $\frstn = n \cdot \frstorb$, which is also redshifted to reach the observer-frame, $\fobsn = n \cdot \frstorb / (1+z)$.  The energy emitted in GWs, per interval of rest-frame frequency, integrated over binary lifetime, is \citet[][Eq.~3.10]{enoki2007a},
             \begin{subequations}
             \begin{align}
-                \frac{d \egw}{d \frstn} & = \int \lgwc(f_p) \, \frac{dt_r}{df_p} \, \sum_{n=1}^\infty \, g(n,e) \, \delta(\frstn - n f_p) \, d f_p \\
-                    & = \sum_{n=1}^\infty \left[ \lgwc(f_p) \frac{\tau_r}{n \, f_p} \, g(n,e) \right]_{f_p = \frstn/n} \\
-                    & = \sum_{n=1}^\infty \left[ \lgwn(f_p) \frac{\tau_r}{n \, f_p} \right]_{f_p = \frstn/n},
+                \label{eq:gw_energy_spectrum}
+                \frac{d \egw}{d \frst} & = \int \lgwc(f_p) \, \frac{dt_r}{df_p} \, \sum_{n=1}^\infty \, g(n,e) \, \delta(\frst - n f_p) \, d f_p \\
+                    & = \sum_{n=1}^\infty \left[ \lgwc(f_p) \cdot \frac{\thard(f_p)}{n f_p} \cdot g(n,e) \right]_{f_p = \frst/n} \\
+                    & = \sum_{n=1}^\infty \left[ \lgwn(f_p) \cdot \frac{\thard(f_p)}{n f_p} \right]_{f_p = \frst/n},
             \end{align}
             \end{subequations}
             where the power-radiated at each harmonic, in the rest-frame, is:
             \begin{equation}
                 \lgwn = \lgwc \cdot g(n,e).
             \end{equation}
-            For circular binaries,
-            \begin{subequations}
-            \begin{align}
-                \frac{d \egw}{d \frstn} \bigg|_{\tr{circ}} & = \frac{\pi}{3 G} \lr[5/3]{G \mchirp} \lr[-1/3]{\pi \frstn}.
-            \end{align}
-            \end{subequations}
 
             Total GW power emitted is the sum over harmonics \citep[][Eq.~2.2]{enoki2007a},
             \begin{align}
@@ -252,23 +247,29 @@
                 \lgw & = \sum_n \lgwn = \lgwc \sum_n g(n,e) = \lgwc \cdot F(e), \\
                 \lgwc & = \frac{32}{5 G c^5} \left(G\mchirp\right)^{10/3} \left( 2\pi \frstorb \right)^{10/3}.
             \end{align}
+            Such that, for circular binaries,
+            \begin{subequations}
+            \begin{align}
+                \frac{d \egw}{d \frst} \bigg|_{\tr{circ}} & = \frac{\pi}{3 G} \lr[5/3]{G \mchirp} \lr[-1/3]{\pi \frst}.
+            \end{align}
+            \end{subequations}
 
             The GW strain amplitude at a given harmonic can be related to the (rest-frame) luminosity as \citep[][Eq.~2.1]{Finn+Thorne-2000},
             \begin{align}
                 \label{eq:strain_lum}
-                \hsn^2 & = \frac{G}{c^3} \, \frac{2}{n} \, \frac{\lgwn}{\lr[2]{2 \pi \, \frstorb} \, \comdist^2}, \\
-                    & = \frac{32}{5 c^8} \, \frac{2}{n} \, \frac{\left(G\mchirp\right)^{10/3}}{\comdist^2} \lr[4/3]{2\pi\frstorb} \cdot g(n,e).
+                \hsn^2 & = \frac{G}{c^3} \, \scale[2]{2}{n} \, \frac{\lgwn}{\lr[2]{2 \pi \, \frstorb} \, \comdist^2}, \\
+                    & = \frac{32}{5 c^8} \, \scale[2]{2}{n} \, \frac{\left(G\mchirp\right)^{10/3}}{\comdist^2} \lr[4/3]{2\pi\frstorb} \cdot g(n,e).
             \end{align}
 
             The GW strain from a single source, over all harmonics, can be written as \citep[][Eq.~9]{amaro-seoane2010},
             \begin{equation}
                 \label{eq:gw_strain_instant}
-                \hs^2(\frstgw) = \sum_{n=1}^\infty \hscirc^2(f_p) \left(\frac{2}{n}\right)^2 \, g(n,e) \bigg|_{f_p = \frstgw/n}.
+                \hs^2(\frstgw) = \sum_{n=1}^\infty \hsn^2 = \sum_{n=1}^\infty \hscirc^2(f_p) \left(\frac{2}{n}\right)^2 \, g(n,e) \bigg|_{f_p = \frstgw/n}.
             \end{equation}
             Here, the GW strain from a circular binary is \citep[][Eq.~7]{sesana2008} (sky and polarization averaged; equivalent to Eq.~\ref{eq:strain_lum}),
             \begin{equation}
             \begin{split}
-                \label{eq:gw_strain_amp}
+                \label{eq:gw_strain_amp_circ}
                 \hscirc
                     & = \frac{8}{10^{1/2}} \frac{\left(G\mchirp\right)^{5/3}}{c^4 \, \comdist} \left(2 \pi \frstorb \right)^{2/3}, \\
                     & = \frac{8}{10^{1/2}} \frac{\left(G\mchirp_o\right)^{5/3}}{c^4 \, \lumdist} \left(2 \pi \fobsorb \right)^{2/3},
@@ -299,8 +300,7 @@
         \subsection{Gravitational Wave Background Calculation}
             \label{sec:gw_gwb_calc}
 
-            It was shown by \citet[][Eq.5]{Phinney-2001} that the GWB spectrum, can be expressed as
-            (see also: \citealt[][Eq.~3.5/10/11]{enoki2007a}; \citealt[][Eq.5]{sesana2008}):
+            It was shown by \citet[][Eq.5]{Phinney-2001} that the GWB spectrum, can be expressed as:
             \begin{subequations}
             \begin{align}
                 % \label{eq:}
@@ -310,24 +310,70 @@
             \end{align}
             \end{subequations}
 
-            Following \citet[][Eq.~3.5/10/11; same as Eq.~\ref{eq:lum_gw} above]{enoki2007a}:
-            \begin{subequations}
-            \begin{align}
-                \hc^2(f) = & \frac{4G}{\pi c^2 f} \int dz \, \frac{dn}{dz}
-                    \sum_{n=1}^\infty \left[ \lgwc \frac{\thard}{n \, f_p} \, g(n,e) \right] \bigg|_{f_p = f(1+z)/n} \\
-                h^2_{c,circ}(f) = & \frac{4 \pi}{3c^2} \lr[-4/3]{\pi f} \int dM_1 \, dM_2 \, dz \, n_c\left(M_1, M_2, z\right) \,
-                    \lr[-1/3]{1+z} \lr[5/3]{G \mchirp},
-            \end{align}
-            \end{subequations}
-            where the last relation assumes circular orbits, and purely GW-driven evolution. \\
-
-            Under the assumption of a smooth/continuous distribution, and purely circular and GW-driven evolution, we can then write:
+            Following \citet[][Eq.~3.5/10/11; or Eq.~\ref{eq:gw_energy_spectrum}~\&~\ref{eq:lum_gw} above]{enoki2007a}:
             \begin{equation}
-                h_c = A_0 \scale[-2/3]{f}{f_0} = A_{\pyr} \scale[-2/3]{f}{1 \, \pyr}.
+                \label{eq:strain_spectrum_en07}
+                \hc^2(f) = \frac{4G}{\pi c^2 f} \int dz \, \frac{dn}{dz} \,
+                    \sum_{n=1}^\infty \left[ \lgwn \cdot \frac{\thard(f_p)}{n \, f_p} \right] \bigg|_{f_p = f(1+z)/n}.
             \end{equation}
 
-            % ===== Monte-Carlo
-            \subsubsection{Monte Carlo}
+            From \citet[][Eq.~2.1]{Finn+Thorne-2000}, we can relate the luminosity to the strain amplitude at each harmonic,
+            \begin{equation}
+                \label{eq:lum_to_strain}
+                \lgwn = \frac{c^3}{G} \scale[2]{n}{2} \cdot \hsn^2(\frstorb) \cdot \lr[2]{4\pi \frstorb} d_c^2,
+            \end{equation}
+            for a comoving distance $d_c$.
+
+            \subsubsection{(Semi-)Analytic Calculation}
+
+                Putting this together we have,
+                \begin{equation}
+                    h_c^2(f) = \int_0^\infty \!\! dz \; \frac{dn_c}{dz} \, \sum_n^\infty \, \hsn^2\lr{f_p} \, 4\pi c \, d_c^2 \cdot \lr{1+z} \cdot \thard(f_p) \, \bigg|_{f_p = f(1+z)/n}.
+                \end{equation}
+                If the GW strain is due to circular binaries \eqref{eq:gw_strain_amp_circ}, then the only harmonic with non-zero strain is $n=2$, such that $2 \, f_r = (1+z) f$:
+                \begin{equation}
+                    h_c^2(f) = \frac{256 \pi}{10 c^7} \int_0^\infty \!\! dz \; \frac{dn_c}{dz} \, \thard(f_r) \cdot \lr[10/3]{G \mathcal{M}} \, \lr[4/3]{2\pi f_r} \, \lr{1+z}.
+                \end{equation}
+                If the circular binaries are purely GW-driven, this can be further simplified to:
+                \begin{equation}
+                    h_c^2(f) = \frac{4 \pi}{3 c^2} \, \lr[-4/3]{2\pi f} \int_0^\infty \!\! dz \; \frac{dn_c}{dz}  \, \frac{\lr[5/3]{G \mathcal{M}}}{\lr[1/3]{1+z}}.
+                \end{equation}
+                From this expression, which assumes a smooth/continuous number-density distribution of binaries, and purely circular and GW-driven evolution, comes the power-law expression for the GW Background strain spectrum first derived in \citep[][Eq.~11]{Phinney-2001},
+                \begin{equation}
+                    h_c = A_0 \scale[-2/3]{f}{f_0} = A_{\pyr} \scale[-2/3]{f}{1 \, \pyr}.
+                \end{equation}
+
+                \NOTE{Compare to Soltan argument and number of remnants and their mass.}
+
+
+            \subsubsection{Monte-Carlo Calculation}
+
+                It was shown by \citet[][Eq.~6]{sesana2008} that the redshift evolution of the comoving number density of sources ($n_c \equiv dN/dV_c$) could be related to the instantaneous number of sources in a given frequency interval as,
+                \begin{equation}
+                    \label{eq:number_density_to_number_frequency}
+                    \frac{dn}{dz} = \frac{d^2N}{dz \, dV_c} = \frac{d^2N}{dz \, d\ln f_p} \frac{d f_p}{dt_r} \frac{dt_r}{dz} \frac{dz}{dV_c}.
+                \end{equation}
+                This relationship is very subtle. \\
+
+                From cosmography \citep[e.g.][]{Hogg1999},
+                \begin{subequations}
+                \begin{align}
+                    \label{eq:cosmography}
+                    \frac{dz}{dt} = H_0 \lr{1+z} E(z) \\
+                    \frac{d V_c}{dz} = 4\pi \frac{c}{H_0} \frac{d_c^2}{E(z)}.
+                \end{align}
+                \end{subequations}
+
+                Taking Eq.~\ref{eq:strain_spectrum_en07} and plugging in Eqs.~\ref{eq:lum_to_strain},~\ref{eq:number_density_to_number_frequency},~\&~\ref{eq:cosmography}, we can then write\footnote{Equivalent to \citet[][Eq.~10]{sesana2008}}:
+                \begin{subequations}
+                \begin{align}
+                    \hc^2(f) = & \int dz \sum_n^\infty \frac{d^2 N}{dz \, d\ln f_p} \, \hsn^2(f_p) \\
+                        = & \int dz \sum_n^\infty \frac{d^2 N}{dz \, d\ln f_p} \, \hscirc^2(f_p) \, \scale[2]{2}{n} \, g(n,e) \bigg|_{f_p = f_r / n = (1+z) f / n}.
+                \end{align}
+                \end{subequations}
+
+        % ===== Monte-Carlo
+        \subsubsection{Monte Carlo}
 
             From \citet[][Eq.~10]{sesana2008},
             \begin{align}
@@ -337,6 +383,7 @@
             \begin{align}
                 \frac{d^2 N}{dz \, d\ln f_r} = \frac{d n_c}{dz} \frac{dz}{dt} \frac{dt}{d\ln f_r} \frac{d V_c}{dz}.
             \end{align}
+
             From cosmography \citep[e.g.][]{Hogg1999},
             \begin{subequations}
             \begin{align}
@@ -680,7 +727,7 @@
             \end{equation}
             showing that strain amplitude is invariant (as we would expect for a dimensionless measure of distance deformation).  Note that we would get the same result starting (and ending) with $\lumdist$ instead of comoving distance, but in either case we must continue to use the same distance measure on both sides of the equation.
 
-            Starting from the standard strain amplitude expression (i.e.~first line of Eq.~\ref{eq:gw_strain_amp}) and using the redshifting of chirp-mass expression \eqref{eq:mchirp_redshift}, we can then show that the second line of Eq.~\ref{eq:gw_strain_amp} naturally follows, i.e. that,
+            Starting from the standard strain amplitude expression (i.e.~first line of Eq.~\ref{eq:gw_strain_amp_circ}) and using the redshifting of chirp-mass expression \eqref{eq:mchirp_redshift}, we can then show that the second line of Eq.~\ref{eq:gw_strain_amp_circ} naturally follows, i.e.~that,
             \begin{equation}
                 \hscirc
                 = \frac{8}{10^{1/2}} \frac{\left(G\mchirp\right)^{5/3}}{c^4 \, \comdist} \left(2 \pi \frstorb \right)^{2/3}
